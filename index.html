@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node {
+  stroke: blue;
+  opacity: 0.9;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #000;
+  stroke-opacity: .6;
+}
+
+div.tooltip {
+  color: #EEE; 
+  padding: .5em; 
+  border-radius: 2px; 
+  box-shadow: 0px 0px 2px 0px #a6a6a6; 
+  opacity: 1.0; 
+  position: absolute;
+  font-size: 16px;
+
+  background: #666; // #F0F8FF;
+
+}
+
+
+</style>
+<body>
+<h1>Visualizing Gawker</h1>
+<p>
+This is a <a href="https://github.com/mbostock/d3/wiki/Force-Layout">force-layout</a> representation of a network: the final distribution (reached in 5-10 seconds) is the equilibrium between a repulsive force between nodes, and the attraction between connected nodes (proportional to the strenght of the edge).
+<br>
+In order to represent Gawker I show articles as nodes, and users that have read two articles as edges between nodes.<br>
+The area of the dots is proportional to the total time spent by users on the article.
+<br>
+The strenght of the edges is proportional to the number of users that read both articles at the nodes.
+<br>
+<u>To see what different articles are talking about, place the mouse over the dots!</u>
+<br>
+
+<small>For the time being only the 50 most read articles are shown!</small><br>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+// add the tooltip area to the webpage
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+    
+var width = 960,
+    height = 800;
+
+var color = d3.scale.category20();
+
+var force = d3.layout.force()
+    .charge(-12000) // repulsive force 
+    .linkDistance(100)
+    .gravity(0.8) // forces things to get closer to center
+    .size([width, height]);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("test.json", function(error, graph) {
+      force
+          .nodes(graph.nodes)
+          .links(graph.links)
+           .linkStrength(function(link) {
+            console.log(link.value)
+            return link.value;
+        })
+
+
+      .start();
+
+     var link = svg.selectAll(".link")
+         .data(graph.links)
+       .enter().append("line")
+         .attr("class", "link")
+         .style("stroke-width", function(d) { return Math.sqrt(d.value)/5; }) // size of edges proportional to user in common between nodes
+   
+     var node = svg.selectAll(".node")
+         .data(graph.nodes)
+       .enter().append("circle")
+         .attr("class", "node")
+         .attr("r", function(d){return Math.sqrt(d.time)/100}) // area of circles proportional to total time on page
+         .style("fill", function(d) { return color(d.group); });
+   
+    node.on("mouseover", function(d) {console.log(d.name, d.users)
+ 
+ 
+     //  tooltip offset //
+	var offsetL = 60;
+	var offsetT = 60;
+	
+	// when mouse is over a node, show tooltip
+	var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+
+	tooltip.transition()
+	   .duration(200)
+	   .attr("r",6)
+	   .style("opacity", 1)
+	   
+	tooltip.html(d.name)
+		.style("left", (d3.event.pageX + 30) + "px")
+	   .style("top", (d3.event.pageY - 40) + "px");
+
+
+					        
+     } // end mouseover
+     )
+     
+     // when mouse goes out, hide tooltip
+     node.on("mouseout", function(d) {tooltip.style("opacity", 0)
+     }) // end mousout
+     
+      
+    node.append("title")
+          .text(function(d) { return d.name; });
+    
+      force.on("tick", function() {
+        link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+    
+        node.attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+      });
+  
+});
+
+</script>
