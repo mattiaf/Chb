@@ -1,7 +1,7 @@
-# Gawker Questions
+# Questions
 
 iPython notebook:
-http://nbviewer.ipython.org/github/mattiaf/Chb/blob/master/Gawker%20Questions.ipynb
+http://nbviewer.ipython.org/github/mattiaf/Chb/blob/master/Chartbeat%20Questions.ipynb
 
 
 
