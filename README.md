@@ -1,3 +1,10 @@
+# Gawker Questions
+
+iPython notebook:
+http://nbviewer.ipython.org/github/mattiaf/Chb/blob/master/Gawker%20Questions.ipynb
+
+
+
 # Gawker network
 
 iPython notebook:
