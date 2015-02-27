@@ -17,19 +17,19 @@ http://www.mfumagalli.com/Chb26022015/
 
 ## Files 
 
-###Chartbeat Questions.ipynb	 
+_Chartbeat Questions.ipynb	 
 Notebook for 4 questions.
 
-###Gawker Project.ipynb
+_Gawker Project.ipynb
 Notebook for Project 
 
-### test.json	Create test.json
+_test.json
 Output of previous notebook
 
-#### index.html	
+_index.html	
 Visualization of Grawker project
 Html and js/D3  of http://www.mfumagalli.com/Chb26022015/
 
-### preview.jpg
+_preview.jpg
 Used in the Gawker Project.ipynb notebook
 
