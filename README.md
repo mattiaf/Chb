@@ -20,14 +20,14 @@ http://www.mfumagalli.com/Chb26022015/
 _Chartbeat Questions.ipynb_ 	 
 Notebook for 4 questions.
 
-_Gawker Project.ipynb_
+_Gawker Project.ipynb_  
 Notebook for Project 
 
 _test.json_  
 Output of previous notebook
 
 _index.html_  	
-Visualization of Grawker project
+Visualization of Grawker project  
 Html and js/D3  of http://www.mfumagalli.com/Chb26022015/
 
 _preview.jpg_  
